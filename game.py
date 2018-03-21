@@ -1,51 +1,80 @@
 import random
-import Observable
-import Observer
+from Observable import Observable
+from Observer import Observer
 
 class Player:
-    attack = random.randint(10,21)
-    health = random.randint(100,121)
+    __inventory = {}
+    __attack = random.randint(10,20)
+    __health = random.randint(100,120)
 
 class NPC:
     #Health stat for the NPC
-    health = 0
+    __health = 0
     #Attack attribute for NPC
-    attack = 0
+    __attack = 0
     #Friendly attribute for NPC. 1 if friendly, 0 if enemy.
-    friendly = 0
+    __friendly = 0
 
 class Person(NPC):
-    health = 100
-    attack = 0
-    friendly = 0
+    def __init__(self):
+        self.__health = 100
+        self.__attack = 0
+        self.__friendly = 1
 
 class Zombie(NPC):
-    #TODO
-    pass
+    def __init__(self):
+        self.__health = random.randint(50,100)
+        self.__attack = random.randint(0,10)
+        self.__friendly = 0
 
 class Vampire(NPC):
-    #TODO
-    pass
+    def __init__(self):
+        self.__health = random.randint(100,200)
+        self.__attack = random.randint(10,20)
+        self.__friendly = 0
 
 class Ghoul(NPC):
-    #TODO
-    pass
+    def __init__(self):
+        self.__health = random.randint(40,80)
+        self.__attack = random.randint(15,30)
+        self.__friendly = 0
 
 class Werewolf(NPC):
-    #TODO
-    pass
+    def __init__(self):
+        self.health = 200
+        self.attack = random.randint(15,30)
+        self.friendly = 0
 
 class Neighborhood(Observable):
-    #TODO
-    pass
+    __grid = [[],[],[]]
+    __monster_count = 0
+    def __init__(self):
+        for i in range(0,4):
+            self.grid[0].append(House())
+            self.grid[1].append(None)
+            self.grid[2].append(House())
+    def set_monster_count(count):
+        __monster_count = count
+    def get_monster_count():
+        return __monster_count
+
+class Weapon():
+    __name = ''
+    __attack = 0.0
 
 class House(Observer):
-    mosters = []
-    monster_type = {'1':Person(),'2':Zombie(),'3':Vampire(),'4':Ghoul(),'5':
-    Werewolf()}
+    monsters = []
+    monster_type = {1:Person(), 2:Zombie(), 3:Vampire(), 4:Ghoul(), 5:Werewolf()}
     def __init__(self):
-        monster_count = random.randint(1,11)
-        for i in monster_count:
-            monsters.append(monster_type[monster_count])
-    def update(self):
-        print("Update")
+        monster_count = random.randint(1,10)
+        print(monster_count)
+        for i in range(0,monster_count):
+            self.monsters.append(self.monster_type[random.randint(2,5)])
+            monster_count++
+    def update(self,neighborhood):
+        neighborhood.set_monster_count(neighborhood.get_monster_count-1)
+
+def main():
+    test = Neighborhood()
+
+main()
